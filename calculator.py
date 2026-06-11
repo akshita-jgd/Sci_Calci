@@ -6,10 +6,7 @@ import re
 import sys
 from typing import Optional
 
-# ---------------------------------------------------------------------------
 # Expression evaluation
-# ---------------------------------------------------------------------------
-
 # Tokens safe to strip during character validation (longest first to avoid
 # partial matches like "sin" inside "asin")
 _SAFE_TOKENS = (
@@ -49,7 +46,7 @@ def evaluate(
 
     expr = expression.strip()
 
-    # ---- Preprocessing ---------------------------------------------------
+    #  Preprocessing
 
     # Display symbols → Python operators
     expr = expr.replace("×", "*").replace("÷", "/").replace("−", "-")
@@ -70,7 +67,7 @@ def evaluate(
             return None
         expr = re.sub(r"\bans\b", str(ans_value), expr)
 
-    # ---- Character validation --------------------------------------------
+    # Character validation 
 
     cleaned = expr
     for tok in _SAFE_TOKENS:
@@ -78,7 +75,7 @@ def evaluate(
     if not all(c in _ALLOWED_CHARS for c in cleaned):
         return None
 
-    # ---- Build namespace -------------------------------------------------
+    #  Build namespace 
 
     ns: dict = {
         "sqrt": math.sqrt,
@@ -105,7 +102,7 @@ def evaluate(
         ns["acos"] = lambda x: math.degrees(math.acos(x))
         ns["atan"] = lambda x: math.degrees(math.atan(x))
 
-    # ---- Evaluation ------------------------------------------------------
+    #  Evaluation 
 
     try:
         result = eval(expr, {"__builtins__": {}}, ns)
@@ -116,10 +113,7 @@ def evaluate(
         return None
 
 
-# ---------------------------------------------------------------------------
 # Result formatting
-# ---------------------------------------------------------------------------
-
 def format_result(value: float) -> str:
     """Format a numeric result for display."""
     if math.isinf(value) or math.isnan(value):
@@ -131,10 +125,7 @@ def format_result(value: float) -> str:
     return f"{value:.10f}".rstrip("0").rstrip(".")
 
 
-# ---------------------------------------------------------------------------
 # CLI REPL
-# ---------------------------------------------------------------------------
-
 def main():
     """Interactive REPL for the scientific calculator."""
     print("=" * 52)
