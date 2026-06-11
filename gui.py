@@ -112,7 +112,7 @@ class ScientificCalculator:
             anchor="e",
         ).pack(fill="x", padx=16, pady=(0, 8))
 
-    # ── Memory row ───────────────────────────────────────────────────────
+    # Memory row 
     def _build_memory_row(self, parent):
         frame = tk.Frame(parent, bg=Theme.BG)
         frame.pack(fill="x", padx=4, pady=(4, 0))
