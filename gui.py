@@ -6,7 +6,7 @@ from tkinter import font as tkfont
 from calculator import evaluate, format_result
 
 
-# ── Colour palette ──────────────────────────────────────────────────────
+# Colour palette 
 class Theme:
     BG = "#1a1a2e"
     DISPLAY_BG = "#0f1626"
@@ -41,7 +41,7 @@ class ScientificCalculator:
         self.root.resizable(False, False)
         self.root.configure(bg=Theme.BG)
 
-        # ── State ────────────────────────────────────────────────────────
+        #  State 
         self.expression = ""
         self.new_number = True
         self.just_calculated = False
@@ -57,7 +57,7 @@ class ScientificCalculator:
         self._build_layout()
         self._bind_keys()
 
-    # ── Styles ───────────────────────────────────────────────────────────
+    # Styles 
     def _build_styles(self):
         self.font_expr = tkfont.Font(family="Segoe UI", size=13)
         self.font_result = tkfont.Font(family="Segoe UI", size=30, weight="bold")
@@ -66,7 +66,7 @@ class ScientificCalculator:
         self.font_mem = tkfont.Font(family="Segoe UI", size=10, weight="bold")
         self.font_history = tkfont.Font(family="Segoe UI", size=10)
 
-    # ── Layout ───────────────────────────────────────────────────────────
+    #Layout 
     def _build_layout(self):
         container = tk.Frame(self.root, bg=Theme.BG)
         container.pack(fill="both", expand=True)
@@ -86,7 +86,7 @@ class ScientificCalculator:
         self._build_buttons(left)
         self._build_history(right)
 
-    # ── Display ──────────────────────────────────────────────────────────
+    # Display 
     def _build_display(self, parent):
         frame = tk.Frame(parent, bg=Theme.DISPLAY_BG, height=100)
         frame.pack(fill="x", padx=4, pady=(4, 0))
@@ -128,7 +128,7 @@ class ScientificCalculator:
             self._make_btn(frame, text, cmd, Theme.BTN_MEM, self.font_mem,
                            width=4, side="left", padx=1)
 
-    # ── Angle row ────────────────────────────────────────────────────────
+    # Angle row 
     def _build_angle_row(self, parent):
         frame = tk.Frame(parent, bg=Theme.BG)
         frame.pack(fill="x", padx=4, pady=(2, 0))
@@ -142,7 +142,7 @@ class ScientificCalculator:
             width=4, side="left", padx=1,
         )
 
-    # ── Buttons ──────────────────────────────────────────────────────────
+    #  Buttons 
     def _make_btn(self, parent, text, cmd, bg, fnt,
                   width=None, side=None, padx=0, expand=False, row=None, col=None,
                   colspan=1, rowspan=1):
@@ -287,7 +287,7 @@ class ScientificCalculator:
             self._make_btn(grid, text, cmd, bg, fnt,
                            row=r, col=c, colspan=colsp)
 
-    # ── History panel ────────────────────────────────────────────────────
+    #  History panel 
     def _build_history(self, parent):
         tk.Label(
             parent, text="History", font=self.font_mem,
@@ -324,7 +324,7 @@ class ScientificCalculator:
             command=self._clear_history,
         ).pack(fill="x", padx=4, pady=(0, 4))
 
-    # ── Input handlers ───────────────────────────────────────────────────
+    # Input handlers 
     def _press_num(self, digit: str):
         if self.just_calculated:
             self.expression = ""
@@ -433,7 +433,7 @@ class ScientificCalculator:
             self.new_number = True
             self.just_calculated = True
 
-    # ── Display helper ───────────────────────────────────────────────────
+    # Display helper 
     def _display_text(self, expr: str) -> str:
         """Convert internal expression to display-friendly text."""
         text = expr
@@ -455,7 +455,7 @@ class ScientificCalculator:
             self.expr_var.set(self._display_text(self.expression))
             self.result_var.set(self.expression if self.expression else "0")
 
-    # ── Angle toggle ─────────────────────────────────────────────────────
+    # Angle toggle 
     def _toggle_deg(self):
         self.deg_mode = True
         self.deg_btn.configure(bg=Theme.ACTIVE)
@@ -466,7 +466,7 @@ class ScientificCalculator:
         self.rad_btn.configure(bg=Theme.ACTIVE)
         self.deg_btn.configure(bg=Theme.BTN_MEM)
 
-    # ── Memory functions ─────────────────────────────────────────────────
+    # Memory functions 
     def _evaluate_current(self) -> float | None:
         """Evaluate the current expression and return the result."""
         if not self.expression:
@@ -503,7 +503,7 @@ class ScientificCalculator:
             self.memory = val
             self.has_memory = True
 
-    # ── History ──────────────────────────────────────────────────────────
+    # History
     def _add_history(self, expression: str, result: str):
         display = self._display_text(expression)
         self.history.append((display, result))
@@ -517,7 +517,7 @@ class ScientificCalculator:
         self.history.clear()
         self.history_listbox.delete(0, tk.END)
 
-    # ── Keyboard bindings ────────────────────────────────────────────────
+    #  Keyboard bindings 
     def _bind_keys(self):
         self.root.bind("<Key>", self._key_press)
         self.root.bind("<Return>", lambda _: self._calculate())
@@ -540,7 +540,7 @@ class ScientificCalculator:
         elif ch.lower() == "c":
             self.clear()
 
-    # ── Entry point ──────────────────────────────────────────────────────
+    #  Entry point 
     def run(self):
         self.root.mainloop()
 
